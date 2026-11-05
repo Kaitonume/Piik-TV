@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Testi dell'interfaccia in cinese semplificato. Terminologia allineata al client web di Piik
+  (房间号, 房主, 观众, 分享, 画面, 邀请链接, 站点口令).
+  I valori tra virgolette conservano gli spazi iniziali, finali e multipli.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Schermata iniziale -->
+    <string name="main_subtitle">在这台电视上观看你用 Piik 从电脑分享的屏幕</string>
+    <string name="search_again">重新搜索</string>
+    <string name="address_or_link">地址或链接…</string>
+    <string name="settings">设置</string>
+    <string name="main_help">在电脑上打开 Piik（本地房间或公网邀请）并开始分享：房间号（4 位数字）就是 Piik 页面上显示的号码。使用邀请链接请选择「地址或链接…」。观看时按 OK 显示统计信息，按返回键回到此页。</string>
+    <string name="status_searching">正在网络中查找运行 Piik 的电脑…</string>
+    <string name="status_searching_progress">正在网络中查找运行 Piik 的电脑… %1$d/%2$d</string>
+    <string name="status_none_found">未找到运行 Piik 的电脑。请在电脑上启动 Piik（同一网络），然后按「重新搜索」，或输入地址。</string>
+    <string name="status_found_one">找到 1 台运行 Piik 的电脑</string>
+    <string name="status_found_many">找到 %1$d 台运行 Piik 的电脑</string>
+    <string name="toast_auto_connect">正在自动连接 %1$s，房间 %2$s</string>
+    <string name="server_default_name">运行 Piik 的电脑</string>
+    <string name="server_room">"  ·  房间 %1$s"</string>
+    <string name="server_enter_code">"  ·  按下输入房间号"</string>
+    <string name="server_link_mode">"  ·  链接模式"</string>
+    <string name="button_code">房间号…</string>
+
+    <!-- Codice stanza -->
+    <string name="hint_room_code">房间号（4 位数字）</string>
+    <string name="hint_room_password">房间密码（仅私密房间需要）</string>
+    <string name="dialog_room_title">%1$s 上的房间</string>
+    <string name="dialog_room_message">输入电脑上 Piik 显示的房间号</string>
+    <string name="button_watch">观看</string>
+    <string name="error_code_format">房间号必须是 4 位数字（1000–9999）</string>
+    <string name="cancel">取消</string>
+    <string name="ok">确定</string>
+
+    <!-- Indirizzo o link -->
+    <string name="hint_address">"192.168.0.5  或  https://….trycloudflare.com/r/1234#v=…"</string>
+    <string name="manual_send_hint">无需用遥控器输入：在电脑上的 VibePiik 中按「将链接发送到 PIIK TV 应用」，或打开\n\nhttp://%1$s:%2$s\n\n粘贴邀请链接后按「发送到电视」。</string>
+    <string name="dialog_manual_title">电脑地址或邀请链接</string>
+    <string name="status_checking">正在检查 %1$s…</string>
+    <string name="status_not_responding">%1$s:%2$s 上的 Piik 无响应。请检查地址，并确认电脑上已打开 Piik。</string>
+
+    <!-- Connessione e password di accesso di Piik -->
+    <string name="status_connecting">正在连接 %1$s…</string>
+    <string name="error_wrong_password">密码错误，请重试</string>
+    <string name="status_access_failed">登录失败：%1$s</string>
+    <string name="hint_site_password">Piik 站点口令</string>
+    <string name="dialog_site_password_title">%1$s 上的 Piik 已设置口令</string>
+    <string name="dialog_site_password_message">输入电脑上 Piik 设置的站点口令</string>
+    <string name="button_sign_in">登录</string>
+    <string name="error_room_not_found_short">未找到房间：请检查房间号</string>
+    <string name="error_password_required">需要输入站点口令</string>
+
+    <!-- Impostazioni -->
+    <string name="latency_min">最低（0 ms 缓冲）</string>
+    <string name="latency_balanced">均衡（最多 40 ms 缓冲）</string>
+    <string name="latency_smooth">最流畅（自适应缓冲）</string>
+    <string name="settings_latency">延迟：%1$s</string>
+    <string name="settings_audio">声音：%1$s</string>
+    <string name="audio_on">开启</string>
+    <string name="audio_off">关闭</string>
+    <string name="settings_stats">启动时显示统计信息：%1$s</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="settings_av_sync">音画同步：%1$s</string>
+    <string name="av_sync_on">是（延迟增加）</string>
+    <string name="av_sync_off">否（画面优先）</string>
+    <string name="settings_auto_connect">自动连接上次的电脑：%1$s</string>
+    <string name="settings_tv_name">在 Piik 中的电视名称：%1$s</string>
+    <string name="settings_vp8">VP8 解码器：%1$s</string>
+    <string name="vp8_software">软件（libvpx）</string>
+    <string name="vp8_hardware">硬件（推荐）</string>
+    <string name="language_auto">自动（跟随系统）</string>
+    <string name="dialog_latency_title">延迟</string>
+    <string name="close">关闭</string>
+    <string name="hint_tv_name">名称（最多 24 个字符）</string>
+    <string name="dialog_tv_name_title">电视名称</string>
+    <string name="save">保存</string>
+
+    <!-- Visione -->
+    <string name="player_connecting">正在连接 %1$s · 房间 %2$s…</string>
+    <string name="player_stats_placeholder">统计信息…</string>
+    <string name="session_webrtc_init_failed">无法初始化 WebRTC：%1$s</string>
+    <string name="session_replaced">这台电视已从另一个会话加入房间</string>
+    <string name="session_auth_failed">无法进入房间</string>
+    <string name="session_access_revoked">电脑已撤销这台电视的访问权限</string>
+    <string name="session_protocol">Piik 服务器拒绝了一条消息：Piik 版本不兼容？</string>
+    <string name="session_origin">Piik 服务器拒绝了连接（地址不被允许）。请在电脑上重启 Piik。</string>
+    <string name="session_reconnecting">与电脑的连接已断开，正在重试…</string>
+    <string name="session_room_closed">房间已在电脑上关闭</string>
+    <string name="session_grant_revoked">电脑已撤销邀请链接</string>
+    <string name="session_rejoining_stream">正在重新连接电脑的画面…</string>
+    <string name="error_room_not_found">未找到房间 %1$s：请检查电脑上 Piik 显示的房间号</string>
+    <string name="error_room_access_denied">无权进入：房间为私密（需要房间密码或邀请链接）</string>
+    <string name="error_invalid_token">需要有效的邀请链接或 Piik 站点口令</string>
+    <string name="error_room_full">房间已满：连接的观众过多</string>
+    <string name="error_auth_required">电脑上的 Piik 需要站点口令</string>
+    <string name="error_server">电脑上的 Piik 服务器出错</string>
+    <string name="error_invalid_message">Piik 服务器拒绝了一条消息（版本不兼容？）</string>
+    <string name="session_linking">正在连接电脑…</string>
+    <string name="session_route_failed">没有可用的线路连接电脑（观众过多或网络受阻）。正在重试…</string>
+    <string name="session_route_waiting">正在等待连接电脑的线路…</string>
+    <string name="session_host_offline">电脑未连接到房间 %1$s</string>
+    <string name="session_host_paused">电脑上的分享已暂停</string>
+    <string name="session_waiting_share">正在等待电脑开始分享屏幕…</string>
+    <string name="session_waiting_video">正在等待电脑的画面…</string>
+    <string name="session_recovering">连接不稳定，正在恢复画面…</string>
+    <string name="route_none">无线路</string>
+    <string name="route_p2p">电脑直连 P2P</string>
+
+    <!-- Overlay statistiche: modelli per String.format (%% = segno di percentuale) -->
+    <string name="stats_number_locale">zh-CN</string>
+    <string name="stats_video">"视频    %1$s  显示 %2$.1f fps\n"</string>
+    <string name="stats_network">"网络    %1$.1f Mbit/s  接收 %2$.1f fps  RTT %3$s  丢包 %4$.2f%%  抖动 %5$.1f ms\n"</string>
+    <string name="stats_buffer">"缓冲    %1$.0f ms   解码 %2$.1f ms   丢弃 %3$d\n"</string>
+    <string name="stats_repairs">"修复    NACK %1$d  PLI %2$d  关键帧 %3$d  卡顿 %4$d\n"</string>
+    <string name="stats_lag">"累计延迟 %1$d ms   追帧 %2$d 次（丢弃 %3$d）\n"</string>
+    <string name="stats_smoothness">"流畅度 电脑跳帧 %1$.1f/s  电视重复 %2$.1f/s  pacer 丢弃 %3$.1f/s  到达抖动 p95 %4$.0f ms  (%5$s)\n"</string>
+    <string name="stats_pacer_queued">排队，等待 %1$.0f ms</string>
+    <string name="stats_pacer_immediate">立即</string>
+    <string name="stats_decode_warning">⚠ 电视无法全速解码此画面：请在 Piik 中降低分辨率（如 720p）或使用 H.264\n</string>
+    <string name="stats_network_waiting">"网络    正在等待画面…\n"</string>
+    <string name="stats_mode">"模式    "</string>
+    <string name="stats_mode_min">最低延迟</string>
+    <string name="stats_mode_balanced">均衡</string>
+    <string name="stats_mode_smooth">最流畅</string>
+    <string name="stats_cpu">\nCPU 应用 %1$.0f%%（共 400%%）</string>
+
+    <!-- Pagina web del ricevitore di link (browser con Accept-Language cinese) -->
+    <string name="link_sent_title">链接已发送到电视 ✓</string>
+    <string name="link_sent_text">电视正在连接房间。</string>
+    <string name="link_invalid_title">这不是 Piik 链接</string>
+    <string name="link_invalid_text">请粘贴从 Piik 复制的邀请链接（…/r/1234#v=…）。</string>
+    <string name="link_form_title">发送链接到电视</string>
+    <string name="link_form_text">在此粘贴从 Piik 复制的邀请链接（「复制邀请链接」）。</string>
+    <string name="link_send_button">发送到电视</string>
+</resources>

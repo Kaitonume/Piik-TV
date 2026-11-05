@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Testi dell'interfaccia in inglese (lingua predefinita). Traduzione italiana: values-it/strings.xml.
+  I valori tra virgolette conservano gli spazi iniziali, finali e multipli (allineamento dell'overlay
+  statistiche, che usa un carattere a spaziatura fissa).
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" translatable="false">Piik TV</string>
+
+    <!-- Schermata iniziale -->
+    <string name="main_subtitle">Watch on this TV the screen you share with Piik from your PC</string>
+    <string name="search_again">Search again</string>
+    <string name="address_or_link">Address or link…</string>
+    <string name="settings">Settings</string>
+    <string name="main_help">On your PC open Piik (Local room or Public invite) and start sharing: the room code (4 digits) is the one shown on the Piik page. For an invite link use “Address or link…”. While watching, press OK for statistics, Back to return here.</string>
+    <string name="status_searching">Searching the network for PCs running Piik…</string>
+    <string name="status_searching_progress">Searching the network for PCs running Piik… %1$d/%2$d</string>
+    <string name="status_none_found">No PC running Piik found. Start Piik on your PC (same network) and press “Search again”, or enter the address.</string>
+    <string name="status_found_one">Found 1 PC running Piik</string>
+    <string name="status_found_many" tools:ignore="PluralsCandidate">Found %1$d PCs running Piik</string>
+    <string name="toast_auto_connect">Connecting automatically to %1$s, room %2$s</string>
+    <string name="server_default_name">PC running Piik</string>
+    <string name="server_room">"  ·  room %1$s"</string>
+    <string name="server_enter_code">"  ·  press to enter the code"</string>
+    <string name="server_link_mode">"  ·  link mode"</string>
+    <string name="button_code">Code…</string>
+
+    <!-- Codice stanza -->
+    <string name="hint_room_code">Room code (4 digits)</string>
+    <string name="hint_room_password">Room password (only if private)</string>
+    <string name="dialog_room_title">Room on %1$s</string>
+    <string name="dialog_room_message">Enter the code shown by Piik on your PC</string>
+    <string name="button_watch">Watch</string>
+    <string name="error_code_format">The code must have 4 digits (1000–9999)</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+
+    <!-- Indirizzo o link -->
+    <string name="hint_address">"192.168.0.5  or  https://….trycloudflare.com/r/1234#v=…"</string>
+    <string name="manual_send_hint">To avoid typing it with the remote: in VibePiik on your PC press “Send URL to PIIK TV app”, or open\n\nhttp://%1$s:%2$s\n\npaste the invite link and press “Send to TV”.</string>
+    <string name="dialog_manual_title">PC address or invite link</string>
+    <string name="status_checking">Checking %1$s…</string>
+    <string name="status_not_responding">Piik is not responding at %1$s:%2$s. Check the address and that Piik is open on your PC.</string>
+
+    <!-- Connessione e password di accesso di Piik -->
+    <string name="status_connecting">Connecting to %1$s…</string>
+    <string name="error_wrong_password">Wrong password, try again</string>
+    <string name="status_access_failed">Sign-in failed: %1$s</string>
+    <string name="hint_site_password">Piik access password</string>
+    <string name="dialog_site_password_title">Piik on %1$s is protected</string>
+    <string name="dialog_site_password_message">Enter the access password set in Piik on your PC</string>
+    <string name="button_sign_in">Sign in</string>
+    <string name="error_room_not_found_short">Room not found: check the code</string>
+    <string name="error_password_required">The access password is required</string>
+
+    <!-- Impostazioni -->
+    <string name="latency_min">Minimum (0 ms buffer)</string>
+    <string name="latency_balanced">Balanced (max 40 ms buffer)</string>
+    <string name="latency_smooth">Maximum smoothness (adaptive buffer)</string>
+    <string name="settings_latency">Latency: %1$s</string>
+    <string name="settings_audio">Audio: %1$s</string>
+    <string name="audio_on">on</string>
+    <string name="audio_off">off</string>
+    <string name="settings_stats">On-screen statistics at startup: %1$s</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="settings_av_sync">Sync audio with video: %1$s</string>
+    <string name="av_sync_on">yes (+ latency)</string>
+    <string name="av_sync_off">no (video first)</string>
+    <string name="settings_auto_connect">Auto-connect to the last PC: %1$s</string>
+    <string name="settings_tv_name">TV name in Piik: %1$s</string>
+    <string name="settings_vp8">VP8 decoder: %1$s</string>
+    <string name="vp8_software">software (libvpx)</string>
+    <string name="vp8_hardware">hardware (recommended)</string>
+    <string name="settings_language" translatable="false">Language / Lingua / 语言: %1$s</string>
+    <string name="language_title" translatable="false">Language / Lingua / 语言</string>
+    <string name="language_auto">Automatic (system)</string>
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_italian" translatable="false">Italiano</string>
+    <string name="language_chinese" translatable="false">中文</string>
+    <string name="dialog_latency_title">Latency</string>
+    <string name="close">Close</string>
+    <string name="hint_tv_name">Name (max 24 characters)</string>
+    <string name="dialog_tv_name_title">TV name</string>
+    <string name="save">Save</string>
+
+    <!-- Visione -->
+    <string name="player_connecting">Connecting to %1$s · room %2$s…</string>
+    <string name="player_stats_placeholder">Statistics…</string>
+    <string name="session_webrtc_init_failed">Unable to initialize WebRTC: %1$s</string>
+    <string name="session_replaced">This TV joined the room from another session</string>
+    <string name="session_auth_failed">Could not access the room</string>
+    <string name="session_access_revoked">The PC revoked this TV\'s access</string>
+    <string name="session_protocol">The Piik server rejected a message: incompatible Piik version?</string>
+    <string name="session_origin">The Piik server refused the connection (address not allowed). Restart Piik on your PC.</string>
+    <string name="session_reconnecting">Connection to the PC lost, retrying…</string>
+    <string name="session_room_closed">The room was closed on the PC</string>
+    <string name="session_grant_revoked">The PC revoked the invite link</string>
+    <string name="session_rejoining_stream">Reconnecting to the PC stream…</string>
+    <string name="error_room_not_found">Room %1$s not found: check the code shown by Piik on your PC</string>
+    <string name="error_room_access_denied">Access denied: the room is private (the room password or an invite link is required)</string>
+    <string name="error_invalid_token">A valid invite link or the Piik access password is required</string>
+    <string name="error_room_full">The room is full: too many viewers connected</string>
+    <string name="error_auth_required">Piik on the PC requires the access password</string>
+    <string name="error_server">Piik server error on the PC</string>
+    <string name="error_invalid_message">The Piik server rejected a message (incompatible version?)</string>
+    <string name="session_linking">Connecting to the PC…</string>
+    <string name="session_route_failed">No route available to the PC (too many viewers or blocked network). Retrying…</string>
+    <string name="session_route_waiting">Waiting for a route to the PC…</string>
+    <string name="session_host_offline">The PC is not connected to room %1$s</string>
+    <string name="session_host_paused">Sharing paused on the PC</string>
+    <string name="session_waiting_share">Waiting for the PC to start screen sharing…</string>
+    <string name="session_waiting_video">Waiting for video from the PC…</string>
+    <string name="session_recovering">Unstable connection, restoring the stream…</string>
+    <string name="route_none">no route</string>
+    <string name="route_p2p">direct P2P from the PC</string>
+
+    <!--
+      Overlay statistiche (tasto OK). Sono modelli per String.format (da qui %% = segno di
+      percentuale). stats_number_locale = formato dei numeri dell'overlay (it-IT: virgola decimale).
+    -->
+    <string name="stats_number_locale">en-US</string>
+    <string name="stats_video">"Video   %1$s  %2$.1f fps shown\n"</string>
+    <string name="stats_network">"Network %1$.1f Mbit/s  %2$.1f fps received  RTT %3$s  loss %4$.2f%%  jitter %5$.1f ms\n"</string>
+    <string name="stats_buffer">"Buffer  %1$.0f ms   decode %2$.1f ms   dropped %3$d\n"</string>
+    <string name="stats_repairs" tools:ignore="PluralsCandidate">"Repairs NACK %1$d  PLI %2$d  keyframe %3$d  freeze %4$d\n"</string>
+    <string name="stats_lag" tools:ignore="PluralsCandidate">"Accumulated delay %1$d ms   catch-ups %2$d (dropped %3$d)\n"</string>
+    <string name="stats_smoothness">"Smoothness PC skips %1$.1f/s  TV repeats %2$.1f/s  pacer drops %3$.1f/s  arrival jitter p95 %4$.0f ms  (%5$s)\n"</string>
+    <string name="stats_pacer_queued">queued, wait %1$.0f ms</string>
+    <string name="stats_pacer_immediate">immediate</string>
+    <string name="stats_decode_warning">⚠ The TV cannot decode this stream at full rate: in Piik lower the resolution (e.g. 720p) or use H.264\n</string>
+    <string name="stats_network_waiting">"Network waiting for video…\n"</string>
+    <string name="stats_mode">"Mode    "</string>
+    <string name="stats_mode_min">minimum latency</string>
+    <string name="stats_mode_balanced">balanced</string>
+    <string name="stats_mode_smooth">maximum smoothness</string>
+    <string name="stats_cpu">\nCPU app %1$.0f%% (of 400%%)</string>
+
+    <!-- Pagina web del ricevitore di link (http://<ip-della-tv>:8790), lingua da Accept-Language -->
+    <string name="link_sent_title">Link sent to the TV ✓</string>
+    <string name="link_sent_text">The TV is now connecting to the room.</string>
+    <string name="link_invalid_title">This is not a Piik link</string>
+    <string name="link_invalid_text">Paste the invite link copied from Piik (…/r/1234#v=…).</string>
+    <string name="link_form_title">Send a link to the TV</string>
+    <string name="link_form_text">Paste here the invite link copied from Piik (“Copy invite link”).</string>
+    <string name="link_send_button">Send to TV</string>
+</resources>

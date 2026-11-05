@@ -1,0 +1,19 @@
+# Build e cache di Gradle/Kotlin
+build/
+.gradle/
+.kotlin/
+captures/
+
+# Configurazione locale (percorso dell'SDK) e file dell'IDE
+local.properties
+.idea/
+*.iml
+
+# Chiavi di firma: mai nel repository
+keystore/
+*.jks
+*.keystore
+keystore.properties
+
+# APK generati
+*.apk
