@@ -18,7 +18,7 @@ refresh, and an interface built for the remote.
 - **Invitation links**, also for Public invite rooms reached from outside the
   home (`https://….trycloudflare.com/r/1234#v=…`).
 - **Links sent from the PC.** While the app is open, the TV listens on TCP 8790:
-  VibePiik (Piik with PIIK TV support, for Windows) sends the room link with one
+  [VibePiik](https://github.com/Kaitonume/VibePiik) (Piik with PIIK TV support, for Windows; optional: PIIK TV also works with official Piik) sends the room link with one
   click, and any browser can send one from `http://<TV address>:8790`.
 - **Hardware decoding** of H.264, VP8, VP9 and AV1 when the TV supports them,
   rendered directly to the screen in low-latency mode where available; software
@@ -31,6 +31,11 @@ refresh, and an interface built for the remote.
 - **On-screen statistics** (OK on the remote): resolution, fps, bitrate, loss,
   RTT, jitter, decoder, buffer and smoothness counters.
 - **English, Italian and Chinese.** Automatic (the TV's language, English for any other) or chosen in Settings → Language.
+- **Updates from the TV** (from 1.6.0). When a new release is out, a button on the start
+  screen shows its changelog and installs it on the spot, after checking its SHA-256
+  (Android asks once to allow PIIK TV to install apps). Important updates open by
+  themselves once. Some TVs (TCL, for example) block apps from starting by themselves:
+  there, open PIIK TV again after the update.
 
 ## Requirements
 
@@ -47,7 +52,7 @@ welcome.
 
 ## Install
 
-Download an APK from the Releases page:
+Download an APK from the [Releases page](https://github.com/Kaitonume/Piik-TV/releases):
 
 | File | For |
 | --- | --- |
@@ -116,6 +121,22 @@ path in the `PIIKTV_KEYSTORE_PROPERTIES` environment variable,
 `keystore/keystore.properties` in the project. Without one, release APKs are
 signed with the debug key. Never commit a keystore.
 
+## Publishing a release
+
+- Raise `versionCode` and `versionName` in `app/build.gradle.kts`; tag `v<versionName>`.
+- Attach the five APKs with their names unchanged (`PiikTV-<version>-<abi>.apk`):
+  the app picks the one for its architecture and checks its SHA-256.
+
+The apps read the release notes this way:
+
+- `<!-- importance: important -->` anywhere in the notes marks the update as
+  **important** (the line is invisible on GitHub): the update window then opens by
+  itself once. Without it the update is optional (only the button).
+- The changelog shown in the app is the summary line in its language, then the main
+  English text. Summary lines go after a `---` line and start with `**EN**`,
+  `**IT**` or `**中文**`. Sections titled `### Install` and code blocks (checksums)
+  are not shown.
+- Leave the release as a normal release (not draft, not pre-release).
 ## License
 
 PIIK TV is released under the [MIT License](./LICENSE). It includes WebRTC,

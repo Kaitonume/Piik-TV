@@ -13,7 +13,7 @@ PIIK TV 是一款 Android TV 应用，以观众身份加入 Piik 房间并全屏
   上次的电脑和房间（可关闭）。
 - **邀请链接**，也支持从家庭网络之外访问的 Public invite 房间
   （`https://….trycloudflare.com/r/1234#v=…`）。
-- **从电脑发送链接。** 应用打开期间，电视在 TCP 8790 端口监听：VibePiik（支持 PIIK TV 的 Windows 版
+- **从电脑发送链接。** 应用打开期间，电视在 TCP 8790 端口监听：[VibePiik](https://github.com/Kaitonume/VibePiik)（可选，PIIK TV 也支持官方 Piik；支持 PIIK TV 的 Windows 版
   Piik）一键即可发送房间链接，任何浏览器也可以通过 `http://<电视地址>:8790` 发送链接。
 - **硬件解码** H.264、VP8、VP9 和 AV1（需电视支持），在可用时以低延迟模式直接渲染到屏幕；
   VP8、VP9 和 AV1 可回退到软件解码。
@@ -21,6 +21,8 @@ PIIK TV 是一款 Android TV 应用，以观众身份加入 Piik 房间并全屏
 - **三种延迟模式**：最低（无缓冲，丢弃迟到的帧）、均衡和最流畅。
 - **屏幕统计信息**（按遥控器 OK 键）：分辨率、帧率、码率、丢包、RTT、抖动、解码器、缓冲和流畅度计数。
 - **英文、意大利文和中文。** 自动（跟随电视语言，其他语言显示英文），也可在 设置 → 语言 中选择。
+- **在电视上更新**（1.6.0 起）。有新版本时，首页会出现一个按钮，显示更新日志，并在校验 SHA-256 后立即安装
+  （Android 会请求一次允许 PIIK TV 安装应用）。重要更新会自动弹出一次。部分电视（例如 TCL）禁止应用自行启动：在这些电视上，更新后请重新打开 PIIK TV。
 
 ## 系统要求
 
@@ -34,7 +36,7 @@ Android 应用开启房间。其他设备和 Android 版本在构建上受支持
 
 ## 安装
 
-从 Releases 页面下载 APK：
+从 [Releases 页面](https://github.com/Kaitonume/Piik-TV/releases) 下载 APK：
 
 | 文件 | 适用于 |
 | --- | --- |

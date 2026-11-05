@@ -133,4 +133,18 @@
     <string name="link_form_title">Invia un link alla TV</string>
     <string name="link_form_text">Incolla qui il link di invito copiato in Piik («Copia link di invito»).</string>
     <string name="link_send_button">Invia alla TV</string>
+    <!-- Aggiornamenti dell'app (release di GitHub) -->
+    <string name="update_button">Aggiornamento %1$s disponibile</string>
+    <string name="update_button_important">Aggiornamento importante %1$s</string>
+    <string name="update_title">PIIK TV %1$s</string>
+    <string name="update_title_important">PIIK TV %1$s · aggiornamento importante</string>
+    <string name="update_install">Installa ora</string>
+    <string name="update_later">Più tardi</string>
+    <string name="update_downloading">Download dell\'aggiornamento… %1$d%%</string>
+    <string name="update_damaged">L\'aggiornamento scaricato è danneggiato. Riprova.</string>
+    <string name="update_failed">Impossibile aggiornare PIIK TV: %1$s</string>
+    <string name="update_permission_title">Consenti gli aggiornamenti</string>
+    <string name="update_permission">Per installare gli aggiornamenti Android deve permettere a PIIK TV di installare app. Apri l\'impostazione, attivala per PIIK TV e torna qui: l\'aggiornamento parte da solo.</string>
+    <string name="update_open_settings">Apri impostazioni</string>
+    <string name="update_no_settings">Su questa TV l\'impostazione non è qui: consenti PIIK TV in Impostazioni → Sicurezza → Origini sconosciute, poi riprova.</string>
 </resources>

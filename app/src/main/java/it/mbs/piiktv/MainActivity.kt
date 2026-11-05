@@ -22,12 +22,21 @@ import it.mbs.piiktv.net.Discovery
 import it.mbs.piiktv.net.PiikHttp
 import it.mbs.piiktv.net.PiikServer
 import it.mbs.piiktv.ui.Ui
+import it.mbs.piiktv.update.Installer
+import it.mbs.piiktv.update.Updates
+import java.io.File
 
 /** Schermata iniziale: PC con Piik trovati in rete, codice stanza, impostazioni. */
 class MainActivity : Activity() {
     private val main = Handler(Looper.getMainLooper())
     private lateinit var status: TextView
     private lateinit var list: LinearLayout
+    private lateinit var updateButton: TextView
+    /** Aggiornamento disponibile (dalle release di GitHub), se c'è. */
+    private var update: Updates.Release? = null
+    /** Installazione rimandata in attesa del permesso «installa app sconosciute». */
+    private var awaitingInstallPermission = false
+    private var downloading = false
     private val servers = LinkedHashMap<String, PiikServer>()
     private var discovery: Discovery? = null
     private var autoConnectTried = false
@@ -87,6 +96,13 @@ class MainActivity : Activity() {
         // Parametri di test opzionali (adb): decoder VP8 e modalità latenza
         if (i.hasExtra("vp8")) Prefs.vp8Decoder = i.getIntExtra("vp8", 0)
         if (i.hasExtra("latency")) Prefs.latencyMode = i.getIntExtra("latency", Prefs.LATENCY_BALANCED)
+        // Prove via adb: release finte da un altro indirizzo ("" torna a GitHub).
+        if (i.hasExtra("updateFeed")) {
+            Prefs.updateFeed = i.getStringExtra("updateFeed")?.takeIf { it.startsWith("http") }
+            Prefs.lastUpdateCheck = 0L
+            Prefs.updateShown = null
+            checkUpdates()
+        }
         when {
             data != null && data.contains("/r/") -> { autoConnectTried = true; handleManual(data) }
             host != null && room != null -> {
@@ -127,6 +143,11 @@ class MainActivity : Activity() {
 
     override fun onResume() {
         super.onResume()
+        checkUpdates()
+        if (awaitingInstallPermission && Installer.canInstall(this)) {
+            awaitingInstallPermission = false
+            update?.let { installUpdate(it) }
+        }
         if (reconnectOnResume) {
             reconnectOnResume = false
             if (Prefs.autoConnect && !playerOpen) {
@@ -143,6 +164,9 @@ class MainActivity : Activity() {
         val col = Ui.vertical(this).apply { setPadding(pad, Ui.dp(this@MainActivity, 36f), pad, pad) }
         col.addView(Ui.text(this, getString(R.string.app_name), 40f, bold = true))
         col.addView(Ui.text(this, getString(R.string.main_subtitle), 18f, Ui.TEXT_DIM))
+        // Aggiornamento disponibile: pulsante che si può riaprire quando si vuole.
+        updateButton = Ui.button(this, "", 18f) { update?.let { showUpdate(it) } }.apply { visibility = View.GONE }
+        col.addView(updateButton, Ui.lp(ViewGroup.LayoutParams.WRAP_CONTENT, top = Ui.dp(this, 16f)))
         status = Ui.text(this, "", 18f, Ui.WARN).apply { setPadding(0, Ui.dp(this@MainActivity, 24f), 0, Ui.dp(this@MainActivity, 8f)) }
         col.addView(status)
         list = Ui.vertical(this)
@@ -536,7 +560,122 @@ class MainActivity : Activity() {
             .show()
     }
 
+    // ---- Aggiornamenti dell'app ----
+
+    private fun installedVersion(): String = try {
+        packageManager.getPackageInfo(packageName, 0).versionName ?: "0"
+    } catch (e: Exception) {
+        "0"
+    }
+
+    /** Controlla le release al più ogni 6 ore (e a ogni avvio dell'app). */
+    private fun checkUpdates() {
+        val now = System.currentTimeMillis()
+        if (!firstCheck && now - Prefs.lastUpdateCheck < UPDATE_INTERVAL) return
+        firstCheck = false
+        Prefs.lastUpdateCheck = now
+        val installed = installedVersion()
+        val feed = Prefs.updateFeed
+        Thread {
+            val found = Updates.check(installed, feed)
+            main.post { if (!isFinishing) onUpdate(found) }
+        }.start()
+    }
+
+    private var firstCheck = true
+
+    private fun onUpdate(found: Updates.Release?) {
+        update = found
+        if (found == null) {
+            updateButton.visibility = View.GONE
+            return
+        }
+        updateButton.text = getString(if (found.important) R.string.update_button_important else R.string.update_button, found.version)
+        updateButton.setTextColor(if (found.important) Ui.WARN else Ui.OK)
+        updateButton.visibility = View.VISIBLE
+        // Permesso appena concesso (l'app è stata riavviata da Android): si riprende da soli.
+        if (Prefs.updatePending == found.version && Installer.canInstall(this) && !playerOpen) {
+            Prefs.updatePending = null
+            installUpdate(found)
+            return
+        }
+        // Importante: la finestra si apre da sola una volta per versione (mai durante la visione).
+        if (found.important && Prefs.updateShown != found.version && !playerOpen) {
+            Prefs.updateShown = found.version
+            showUpdate(found)
+        }
+    }
+
+    private fun appLanguage(): String {
+        @Suppress("DEPRECATION")
+        val lang = resources.configuration.locale.language
+        return if (lang == "it" || lang == "zh") lang else "en"
+    }
+
+    private fun showUpdate(r: Updates.Release) {
+        val pad = Ui.dp(this, 24f)
+        val text = Ui.text(this, Updates.changelog(r.body, appLanguage()), 16f).apply { setPadding(pad, pad / 2, pad, 0) }
+        val scroll = ScrollView(this).apply { addView(text); isFocusable = true }
+        val title = getString(if (r.important) R.string.update_title_important else R.string.update_title, r.version)
+        dialog().setTitle(title)
+            .setView(scroll)
+            .setPositiveButton(R.string.update_install) { _, _ -> installUpdate(r) }
+            .setNegativeButton(R.string.update_later, null)
+            .show()
+            .getButton(AlertDialog.BUTTON_POSITIVE)?.requestFocus()
+    }
+
+    private fun installUpdate(r: Updates.Release) {
+        if (downloading) return
+        if (!Installer.canInstall(this)) {
+            dialog().setTitle(R.string.update_permission_title)
+                .setMessage(R.string.update_permission)
+                .setPositiveButton(R.string.update_open_settings) { _, _ ->
+                    awaitingInstallPermission = true
+                    Prefs.updatePending = r.version
+                    if (!Installer.openPermission(this)) {
+                        awaitingInstallPermission = false
+                        Toast.makeText(this, R.string.update_no_settings, Toast.LENGTH_LONG).show()
+                    }
+                }
+                .setNegativeButton(R.string.cancel, null)
+                .show()
+            return
+        }
+        downloading = true
+        Prefs.updatePending = null
+        val progress = dialog().setTitle(getString(R.string.update_title, r.version))
+            .setMessage(getString(R.string.update_downloading, 0))
+            .setCancelable(false)
+            .show()
+        val apk = File(cacheDir, "update/${r.apkName}")
+        Thread {
+            val error = try {
+                Updates.download(r, apk) { p -> main.post { progress.setMessage(getString(R.string.update_downloading, p)) } }
+                null
+            } catch (e: SecurityException) {
+                getString(R.string.update_damaged)
+            } catch (e: Exception) {
+                getString(R.string.update_failed, e.message ?: e.javaClass.simpleName)
+            }
+            main.post {
+                downloading = false
+                progress.dismiss()
+                if (error != null) {
+                    Toast.makeText(this, error, Toast.LENGTH_LONG).show()
+                } else {
+                    try {
+                        Installer.install(this, apk)
+                    } catch (e: Exception) {
+                        Toast.makeText(this, getString(R.string.update_failed, e.message ?: e.javaClass.simpleName), Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }.start()
+    }
+
     companion object {
         private const val REQ_PLAYER = 7
+        private const val UPDATE_INTERVAL = 6 * 60 * 60 * 1000L
     }
 }

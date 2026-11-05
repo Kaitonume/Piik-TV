@@ -31,6 +31,25 @@ object Prefs {
         get() = sp.getBoolean("audio", true)
         set(v) = sp.edit().putBoolean("audio", v).apply()
 
+    /** Ultimo controllo degli aggiornamenti (ms) e ultima versione già proposta da sola. */
+    var lastUpdateCheck: Long
+        get() = sp.getLong("updateCheck", 0L)
+        set(v) = sp.edit().putLong("updateCheck", v).apply()
+
+    var updateShown: String?
+        get() = sp.getString("updateShown", null)
+        set(v) = sp.edit().putString("updateShown", v).apply()
+
+    /** Versione da installare appena c'è il permesso (Android riavvia l'app quando lo si concede). */
+    var updatePending: String?
+        get() = sp.getString("updatePending", null)
+        set(v) = sp.edit().putString("updatePending", v).apply()
+
+    /** Solo per le prove via adb: indirizzo alternativo delle release. */
+    var updateFeed: String?
+        get() = sp.getString("updateFeed", null)
+        set(v) = sp.edit().putString("updateFeed", v).apply()
+
     var showStats: Boolean
         get() = sp.getBoolean("stats", false)
         set(v) = sp.edit().putBoolean("stats", v).apply()

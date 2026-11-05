@@ -18,7 +18,7 @@ scanditi sulla frequenza del display e un'interfaccia fatta per il telecomando.
 - **Link di invito**, anche per le stanze Public invite raggiunte da fuori casa
   (`https://….trycloudflare.com/r/1234#v=…`).
 - **Link mandati dal PC.** Mentre l'app è aperta, la TV ascolta sulla porta TCP
-  8790: VibePiik (Piik con il supporto a PIIK TV, per Windows) manda il link della
+  8790: [VibePiik](https://github.com/Kaitonume/VibePiik) (Piik con il supporto a PIIK TV, per Windows; facoltativa: PIIK TV funziona anche con Piik ufficiale) manda il link della
   stanza con un clic, e qualsiasi browser può mandarne uno da
   `http://<indirizzo della TV>:8790`.
 - **Decodifica hardware** di H.264, VP8, VP9 e AV1 quando la TV li supporta, con la
@@ -31,6 +31,11 @@ scanditi sulla frequenza del display e un'interfaccia fatta per il telecomando.
   ritardo), bilanciata e massima fluidità.
 - **Statistiche a schermo** (OK sul telecomando).
 - **Italiano, inglese e cinese**: automatica (lingua della TV, inglese per tutte le altre) o scelta in Impostazioni → Lingua.
+- **Aggiornamenti dalla TV** (dalla 1.6.0): quando esce una nuova versione, un pulsante
+  nella schermata iniziale ne mostra il changelog e la installa sul momento, dopo aver
+  verificato l'impronta SHA-256 (Android chiede una volta di permettere a PIIK TV di
+  installare app). Gli aggiornamenti importanti si aprono da soli una volta. Alcune TV (per esempio TCL)
+  impediscono alle app di avviarsi da sole: lì, dopo l'aggiornamento, riapri PIIK TV.
 
 ## Requisiti
 
@@ -44,7 +49,7 @@ altre versioni di Android sono supportati dalla compilazione ma non ancora prova
 
 ## Installazione
 
-Scarica un APK dalla pagina Releases:
+Scarica un APK dalla [pagina Releases](https://github.com/Kaitonume/Piik-TV/releases):
 
 | File | Per |
 | --- | --- |
