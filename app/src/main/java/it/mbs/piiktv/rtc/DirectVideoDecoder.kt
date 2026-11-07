@@ -435,9 +435,11 @@ class DirectVideoDecoder(
             fmt.setInteger(MediaFormat.KEY_OPERATING_RATE, 120)
         }
         if (v.adaptiveMax && hw.adaptive) {
-            // Piik cambia livello 540p <-> 1080p sullo stesso flusso: basta il massimo reale (non 4K).
-            fmt.setInteger(MediaFormat.KEY_MAX_WIDTH, maxOf(width, 1920))
-            fmt.setInteger(MediaFormat.KEY_MAX_HEIGHT, maxOf(height, 1080))
+            // Piik cambia livello 540p <-> 1080p sullo stesso flusso: basta il massimo reale.
+            // HEVC e AV1 (VibePiik) possono arrivare fino al 4K se il decoder lo regge.
+            val uhd = hw.mime != TvDecoderFactory.MIME_H264 && hw.maxWidth >= 3840 && hw.maxHeight >= 2160
+            fmt.setInteger(MediaFormat.KEY_MAX_WIDTH, maxOf(width, if (uhd) 3840 else 1920))
+            fmt.setInteger(MediaFormat.KEY_MAX_HEIGHT, maxOf(height, if (uhd) 2160 else 1080))
         }
         return try {
             c.configure(fmt, surface, null, 0)

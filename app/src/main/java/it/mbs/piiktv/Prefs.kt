@@ -87,6 +87,7 @@ object Prefs {
 
     fun roomFor(host: String): String? = sp.getString("room:$host", null)
     fun setRoomFor(host: String, room: String) = sp.edit().putString("room:$host", room).apply()
+    fun clearRoomFor(host: String) = sp.edit().remove("room:$host").apply()
 
     fun grantFor(host: String, room: String): String? = sp.getString("grant:$host:$room", null)
     fun setGrantFor(host: String, room: String, grant: String?) =

@@ -80,6 +80,25 @@ object PiikHttp {
         }
     }
 
+    /**
+     * VibePiik (dalla 1.2.0): codice della stanza che il PC sta ospitando, letto solo dalla rete di
+     * casa. null con Piik ufficiale, senza stanza o con l'ingresso col codice chiuso.
+     */
+    fun hostedRoom(server: PiikServer): String? {
+        if (server.isPublic) return null
+        val req = Request.Builder().url("${server.origin}/api/vibepiik/tv-room")
+            .header("Accept", "application/json").header("Connection", "close").build()
+        return try {
+            client.newCall(req).execute().use { resp ->
+                if (!resp.isSuccessful) return null
+                val room = JSONObject(resp.body?.string() ?: return null).optString("room")
+                room.takeIf { Regex("^[1-9][0-9]{3}$").matches(it) }
+            }
+        } catch (_: Exception) {
+            null
+        }
+    }
+
     data class SiteAccess(val required: Boolean, val authenticated: Boolean)
 
     fun siteAccess(server: PiikServer, cookie: String?): SiteAccess? {

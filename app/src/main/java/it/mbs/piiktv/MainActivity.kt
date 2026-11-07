@@ -226,14 +226,29 @@ class MainActivity : Activity() {
 
     private fun isPublicHost(host: String) = host.any { it.isLetter() }
 
-    private fun onServerFound(s: PiikServer) {
+    private fun onServerFound(s: PiikServer, refreshRoom: Boolean = true) {
         s.name?.let { Prefs.setHostName(s.host, it) } ?: run { s.name = Prefs.hostName(s.host) }
         servers[s.host] = s
         // Solo gli IP di casa: gli indirizzi dei tunnel pubblici cambiano a ogni avvio di Piik.
         if (!s.isPublic) Prefs.knownHosts = Prefs.knownHosts + s.host
         status.text = if (servers.size == 1) getString(R.string.status_found_one) else getString(R.string.status_found_many, servers.size)
         renderList()
-        maybeAutoConnect(s)
+        if (!refreshRoom || s.isPublic) {
+            maybeAutoConnect(s)
+            return
+        }
+        // VibePiik dice quale stanza sta ospitando: il codice salvato segue quello attuale
+        // (prima restava l'ultimo inserito anche dopo un cambio di codice sul PC).
+        Thread {
+            val hosted = PiikHttp.hostedRoom(s)
+            main.post {
+                if (hosted != null && hosted != Prefs.roomFor(s.host)) {
+                    Prefs.setRoomFor(s.host, hosted)
+                    renderList()
+                }
+                maybeAutoConnect(s)
+            }
+        }.start()
     }
 
     private fun maybeAutoConnect(s: PiikServer) {
@@ -358,7 +373,7 @@ class MainActivity : Activity() {
                     status.text = getString(R.string.status_not_responding, host, port.toString())
                     return@post
                 }
-                onServerFound(s)
+                onServerFound(s, refreshRoom = room == null)
                 if (room != null) {
                     Prefs.setRoomFor(host, room)
                     if (grant != null) Prefs.setGrantFor(host, room, grant)
@@ -455,8 +470,25 @@ class MainActivity : Activity() {
         )
         when (error) {
             "ROOM_NOT_FOUND", "ROOM_ACCESS_DENIED", "INVALID_TOKEN" -> {
-                Prefs.roomFor(host)?.let { Prefs.setGrantFor(host, it, null) }
-                askCode(s, msg ?: getString(R.string.error_room_not_found_short))
+                val failed = Prefs.roomFor(host)
+                failed?.let { Prefs.setGrantFor(host, it, null) }
+                // Stanza sparita (codice cambiato sul PC): se VibePiik ne ospita un'altra ci si
+                // collega a quella, altrimenti si chiede il codice senza riproporre quello vecchio.
+                Thread {
+                    val hosted = if (error == "ROOM_NOT_FOUND") PiikHttp.hostedRoom(s) else null
+                    main.post {
+                        if (hosted != null && hosted != failed) {
+                            Prefs.setRoomFor(host, hosted)
+                            renderList()
+                            connect(s, hosted)
+                        } else {
+                            if (error == "ROOM_NOT_FOUND") Prefs.clearRoomFor(host)
+                            renderList()
+                            askCode(s, msg ?: getString(R.string.error_room_not_found_short))
+                        }
+                    }
+                }.start()
+                return
             }
             "AUTH_REQUIRED" -> {
                 val room = Prefs.roomFor(host)

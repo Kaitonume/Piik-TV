@@ -14,14 +14,16 @@ scanditi sulla frequenza del display e un'interfaccia fatta per il telecomando.
 
 - **Trova da sola il PC.** Cerca Piik nella rete locale (porta 8787) e si entra con
   il codice stanza di 4 cifre. La volta dopo si ricollega da sola all'ultimo PC e
-  all'ultima stanza (si può disattivare).
+  all'ultima stanza (si può disattivare). Dalla 1.7.0, con VibePiik 1.2.0 entra nella
+  stanza aperta sul PC anche se il codice è cambiato; se quella stanza non c'è più
+  chiede il nuovo codice invece di riprovare il vecchio.
 - **Link di invito**, anche per le stanze Public invite raggiunte da fuori casa
   (`https://….trycloudflare.com/r/1234#v=…`).
 - **Link mandati dal PC.** Mentre l'app è aperta, la TV ascolta sulla porta TCP
   8790: [VibePiik](https://github.com/Kaitonume/VibePiik) (Piik con il supporto a PIIK TV, per Windows; facoltativa: PIIK TV funziona anche con Piik ufficiale) manda il link della
   stanza con un clic, e qualsiasi browser può mandarne uno da
   `http://<indirizzo della TV>:8790`.
-- **Decodifica hardware** di H.264, VP8, VP9 e AV1 quando la TV li supporta, con la
+- **Decodifica hardware** di H.264, HEVC (dalla 1.7.0), VP8, VP9 e AV1 quando la TV li supporta, con la
   modalità a bassa latenza dove disponibile; decodifica software di riserva per
   VP8, VP9 e AV1.
 - **Cadenza dei fotogrammi** sulla frequenza del display: i fotogrammi che arrivano
@@ -74,7 +76,10 @@ PC, **Indietro** chiude lo stream e torna al menu (di nuovo Indietro esce),
 
 Per l'immagine più fluida usa H.264 sul PC (la TV lo decodifica in hardware) e una
 connessione a 5 GHz o via cavo per il PC; su una rete 2,4 GHz affollata abbassa
-bitrate o risoluzione in Piik.
+bitrate o risoluzione in Piik. Con [VibePiik](https://github.com/Kaitonume/VibePiik)
+1.2.0 puoi condividere anche in HEVC o AV1: circa metà bitrate per la stessa
+immagine e fino al 4K dove il decoder della TV lo consente (molte TV decodificano
+H.264 solo fino al 1080p).
 
 ## Ricevitore dei link, compilazione e licenza
 

@@ -44,6 +44,8 @@ class TvDecoderFactory(private val latencyMode: Int) : VideoDecoderFactory {
             list += h264("42e01f")
             list += h264("42001f")
         }
+        // HEVC (VibePiik): solo hardware, il profilo Main predefinito basta.
+        if (HwCodecs.find(MIME_H265) != null) list += VideoCodecInfo("H265", emptyMap(), emptyList())
         for (name in listOf("VP8", "VP9", "AV1")) {
             val mime = mimeFor(name) ?: continue
             if (HwCodecs.find(mime) != null) {
@@ -85,8 +87,10 @@ class TvDecoderFactory(private val latencyMode: Int) : VideoDecoderFactory {
 
     companion object {
         const val MIME_H264 = "video/avc"
+        const val MIME_H265 = "video/hevc"
         fun mimeFor(name: String): String? = when (name.uppercase()) {
             "H264" -> MIME_H264
+            "H265" -> MIME_H265
             "VP8" -> "video/x-vnd.on2.vp8"
             "VP9" -> "video/x-vnd.on2.vp9"
             "AV1" -> "video/av01"

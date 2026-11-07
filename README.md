@@ -14,13 +14,15 @@ refresh, and an interface built for the remote.
 
 - **Finds the PC by itself.** It scans the local network for Piik (port 8787),
   then joins with the 4-digit room code. Next time it reconnects to the last PC
-  and room automatically (optional).
+  and room automatically (optional). From 1.7.0, with VibePiik 1.2.0 it joins the room
+  that is open on the PC even if the code has changed; if that room is gone it asks
+  for the new code instead of retrying the old one.
 - **Invitation links**, also for Public invite rooms reached from outside the
   home (`https://….trycloudflare.com/r/1234#v=…`).
 - **Links sent from the PC.** While the app is open, the TV listens on TCP 8790:
   [VibePiik](https://github.com/Kaitonume/VibePiik) (Piik with PIIK TV support, for Windows; optional: PIIK TV also works with official Piik) sends the room link with one
   click, and any browser can send one from `http://<TV address>:8790`.
-- **Hardware decoding** of H.264, VP8, VP9 and AV1 when the TV supports them,
+- **Hardware decoding** of H.264, HEVC (from 1.7.0), VP8, VP9 and AV1 when the TV supports them,
   rendered directly to the screen in low-latency mode where available; software
   decoding as a fallback for VP8, VP9 and AV1.
 - **Frame pacing** on the display refresh: frames that arrive irregularly over
@@ -86,7 +88,10 @@ Piik, VP8 decoder (hardware or software), language.
 
 For the smoothest picture use H.264 on the PC (the TV decodes it in hardware) and
 a 5 GHz or wired connection for the PC; on a busy 2.4 GHz network lower the
-bitrate or resolution in Piik.
+bitrate or resolution in Piik. With [VibePiik](https://github.com/Kaitonume/VibePiik)
+1.2.0 you can also share in HEVC or AV1: about half the bitrate for the same
+picture, and up to 4K where the TV's decoder allows it (many TVs decode H.264 only
+up to 1080p).
 
 ## Link receiver
 
