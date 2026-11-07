@@ -37,7 +37,8 @@ refresh, and an interface built for the remote.
   screen shows its changelog and installs it on the spot, after checking its SHA-256
   (Android asks once to allow PIIK TV to install apps). Important updates open by
   themselves once. Some TVs (TCL, for example) block apps from starting by themselves:
-  there, open PIIK TV again after the update.
+  there, open PIIK TV again after the update. Settings → Updates shows the installed
+  version and checks right away (from 1.7.1).
 
 ## Requirements
 

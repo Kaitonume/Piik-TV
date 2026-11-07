@@ -15,8 +15,8 @@ android {
         applicationId = "it.mbs.piiktv"
         minSdk = 21
         targetSdk = 34
-        versionCode = 10
-        versionName = "1.7.0"
+        versionCode = 11
+        versionName = "1.7.1"
     }
 
     // Un APK per architettura più uno universale con tutte e quattro, tutti con lo stesso versionCode:

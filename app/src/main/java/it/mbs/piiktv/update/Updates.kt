@@ -40,21 +40,33 @@ object Updates {
         .readTimeout(30, TimeUnit.SECONDS)
         .build()
 
+    /** Esito di un controllo: release più nuova, già aggiornata, oppure GitHub non raggiungibile. */
+    sealed class Result {
+        data class Found(val release: Release) : Result()
+        object UpToDate : Result()
+        object Failed : Result()
+    }
+
     /**
      * Legge l'ultima release. [feed] sostituisce l'indirizzo delle API (solo per le prove via
      * adb). Restituisce null se non c'è niente di più nuovo di [installed] o se la rete non risponde.
      */
-    fun check(installed: String, feed: String? = null): Release? = try {
+    fun check(installed: String, feed: String? = null): Release? =
+        (checkResult(installed, feed) as? Result.Found)?.release
+
+    /** Come [check], ma distingue «già aggiornata» da «controllo non riuscito» (controllo manuale). */
+    fun checkResult(installed: String, feed: String? = null): Result = try {
         val request = Request.Builder().url(feed ?: API)
             .header("Accept", "application/vnd.github+json")
             .header("User-Agent", "PIIK-TV")
             .build()
         http.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) return null
-            parse(JSONObject(response.body?.string() ?: return null), installed)
+            if (!response.isSuccessful) return Result.Failed
+            val json = JSONObject(response.body?.string() ?: return Result.Failed)
+            parse(json, installed)?.let { Result.Found(it) } ?: Result.UpToDate
         }
     } catch (e: Exception) {
-        null
+        Result.Failed
     }
 
     fun parse(json: JSONObject, installed: String): Release? {

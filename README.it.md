@@ -38,6 +38,7 @@ scanditi sulla frequenza del display e un'interfaccia fatta per il telecomando.
   verificato l'impronta SHA-256 (Android chiede una volta di permettere a PIIK TV di
   installare app). Gli aggiornamenti importanti si aprono da soli una volta. Alcune TV (per esempio TCL)
   impediscono alle app di avviarsi da sole: lì, dopo l'aggiornamento, riapri PIIK TV.
+  Impostazioni → Aggiornamenti mostra la versione installata e controlla subito (dalla 1.7.1).
 
 ## Requisiti
 

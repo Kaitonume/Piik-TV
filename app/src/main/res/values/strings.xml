@@ -158,4 +158,8 @@
     <string name="update_permission">To install updates, Android must allow PIIK TV to install apps. Open the setting, turn it on for PIIK TV, then come back: the update starts by itself.</string>
     <string name="update_open_settings">Open settings</string>
     <string name="update_no_settings">This TV has no such setting here: allow PIIK TV in Settings → Security → Unknown sources, then try again.</string>
-</resources>
+    <string name="settings_updates">Updates: version %1$s</string>
+    <string name="update_checking">Checking for updates…</string>
+    <string name="update_up_to_date">PIIK TV %1$s is the latest version.</string>
+    <string name="update_check_failed">Could not check for updates. Check the TV\'s internet connection and try again.</string>
+    <string name="update_retry">Try again</string></resources>

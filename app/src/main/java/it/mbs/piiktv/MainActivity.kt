@@ -513,6 +513,7 @@ class MainActivity : Activity() {
             getString(R.string.settings_tv_name, Prefs.displayName),
             getString(R.string.settings_vp8, getString(if (Prefs.vp8Decoder == 2) R.string.vp8_software else R.string.vp8_hardware)),
             getString(R.string.settings_language, languageName(Prefs.language)),
+            getString(R.string.settings_updates, installedVersion()),
         )
         dialog().setTitle(R.string.settings)
             .setItems(items) { _, which ->
@@ -527,6 +528,7 @@ class MainActivity : Activity() {
                     5 -> askDisplayName()
                     6 -> { Prefs.vp8Decoder = if (Prefs.vp8Decoder == 2) 0 else 2; showSettings() }
                     7 -> askLanguage()
+                    8 -> checkUpdatesNow()
                 }
             }
             .setNegativeButton(R.string.close, null)
@@ -615,6 +617,42 @@ class MainActivity : Activity() {
     }
 
     private var firstCheck = true
+
+    /**
+     * Impostazioni → Aggiornamenti: controlla subito (anche entro le 6 ore) e dice sempre com'è
+     * andata: changelog con «Installa ora», «è l'ultima versione» oppure «controllo non riuscito».
+     */
+    private fun checkUpdatesNow() {
+        val installed = installedVersion()
+        val feed = Prefs.updateFeed
+        val waiting = dialog().setTitle(getString(R.string.settings_updates, installed))
+            .setMessage(R.string.update_checking)
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+        Thread {
+            val result = Updates.checkResult(installed, feed)
+            main.post {
+                if (isFinishing || !waiting.isShowing) return@post
+                waiting.dismiss()
+                Prefs.lastUpdateCheck = System.currentTimeMillis()
+                when (result) {
+                    is Updates.Result.Found -> { onUpdate(result.release); showUpdate(result.release) }
+                    Updates.Result.UpToDate -> {
+                        onUpdate(null)
+                        dialog().setTitle(getString(R.string.settings_updates, installed))
+                            .setMessage(getString(R.string.update_up_to_date, installed))
+                            .setPositiveButton(R.string.close) { _, _ -> showSettings() }
+                            .show()
+                    }
+                    Updates.Result.Failed -> dialog().setTitle(getString(R.string.settings_updates, installed))
+                        .setMessage(R.string.update_check_failed)
+                        .setPositiveButton(R.string.update_retry) { _, _ -> checkUpdatesNow() }
+                        .setNegativeButton(R.string.close) { _, _ -> showSettings() }
+                        .show()
+                }
+            }
+        }.start()
+    }
 
     private fun onUpdate(found: Updates.Release?) {
         update = found
